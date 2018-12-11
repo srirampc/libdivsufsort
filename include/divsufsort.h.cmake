@@ -173,6 +173,69 @@ sa_simplesearch@W64BIT@(const sauchar_t *T, saidx@W64BIT@_t Tsize,
                 saint_t c, saidx@W64BIT@_t *left);
 
 
+
+/*- Misclleneous Functions for testing purposes -*/
+/* sssort.c */
+DIVSUFSORT_API
+void
+sssort@W64BIT@(const sauchar_t *Td, const saidx@W64BIT@_t *PA,
+       saidx@W64BIT@_t *first, saidx@W64BIT@_t *last,
+       saidx@W64BIT@_t *buf, saidx@W64BIT@_t bufsize,
+       saidx@W64BIT@_t depth, saidx@W64BIT@_t n, saidx@W64BIT@_t lastsuffix);
+/* trsort.c */
+DIVSUFSORT_API
+void
+trsort@W64BIT@(saidx@W64BIT@_t *ISA, saidx@W64BIT@_t *SA, saidx@W64BIT@_t n, saidx@W64BIT@_t depth);
+
+DIVSUFSORT_API
+saidx@W64BIT@_t
+init_buckets(const sauchar_t *T, saidx@W64BIT@_t *SA,
+               saidx@W64BIT@_t *bucket_A, saidx@W64BIT@_t *bucket_B,
+               saidx@W64BIT@_t n);
+
+DIVSUFSORT_API
+void
+init_typeBstar(const sauchar_t *T, saidx@W64BIT@_t *SA,
+               saidx@W64BIT@_t *PAb,
+               saidx@W64BIT@_t *bucket_B,
+               saidx@W64BIT@_t n,
+               saidx@W64BIT@_t m);
+
+DIVSUFSORT_API
+void
+rank_typeBstar(saidx@W64BIT@_t* ISAb, saidx@W64BIT@_t* SA, saidx@W64BIT@_t m);
+
+DIVSUFSORT_API
+void
+string_sort_typeBstar(const sauchar_t *T, saidx@W64BIT@_t *SA,
+                      saidx@W64BIT@_t *PAb, saidx@W64BIT@_t* bucket_B,
+                      saidx@W64BIT@_t n, saidx@W64BIT@_t m);
+
+DIVSUFSORT_API
+void
+update_typeBstar_order(const sauchar_t *T, saidx@W64BIT@_t *SA,
+                       saidx@W64BIT@_t *ISAb,
+                       saidx@W64BIT@_t n, saidx@W64BIT@_t m);
+
+DIVSUFSORT_API
+void
+update_bucket_bounds(saidx@W64BIT@_t* SA,
+                     saidx@W64BIT@_t* bucket_A,
+                     saidx@W64BIT@_t* bucket_B,
+                     saidx@W64BIT@_t n, saidx@W64BIT@_t m);
+
+DIVSUFSORT_API
+void
+induce_typeB(const sauchar_t *T, saidx@W64BIT@_t *SA,
+             saidx@W64BIT@_t *bucket_A, saidx@W64BIT@_t *bucket_B,
+             saidx@W64BIT@_t n, saidx@W64BIT@_t m);
+
+DIVSUFSORT_API
+void
+induce_typeA(const sauchar_t *T, saidx@W64BIT@_t *SA,
+             saidx@W64BIT@_t *bucket_A, saidx@W64BIT@_t *bucket_B,
+             saidx@W64BIT@_t n, saidx@W64BIT@_t m);
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */
