@@ -224,7 +224,7 @@ sort_typeBstar(const sauchar_t *T, saidx_t *SA,
                saidx_t *bucket_A, saidx_t *bucket_B,
                saidx_t n) {
   saidx_t *PAb, *ISAb;
-  saidx_t i, m;
+  saidx_t m;
 
   m = init_buckets(T, SA, bucket_A, bucket_B, n);
 
@@ -293,6 +293,53 @@ induce_typeB(const sauchar_t *T, saidx_t *SA,
 }
 
 void
+induce_typeB2(const sauchar_t *T, saidx_t *SA,
+             saidx_t *bucket_A, saidx_t *bucket_B,
+             saidx_t n, saidx_t m){
+  saidx_t *i, *j, *k;
+  saidx_t s;
+  saint_t c0, c1, c2;
+
+  if(0 < m) {
+    /* Construct the sorted order of type B suffixes by using
+       the sorted order of type B* suffixes. */
+    for(c1 = ALPHABET_SIZE - 2; 0 <= c1; --c1) {
+      /* Scan the suffix array from right to left. */
+      for(i = SA + BUCKET_BSTAR(c1, c1 + 1),
+          j = SA + BUCKET_A(c1 + 1) - 1, k = NULL, c2 = -1;
+          i <= j;
+          --j) {
+        if(0 < (s = *j)) {
+          assert(T[s] == c1);
+          assert(((s + 1) < n) && (T[s] <= T[s + 1]));
+          assert(T[s - 1] <= T[s]);
+          *j = ~s;
+          c0 = T[--s];
+          if((0 < s) && (T[s - 1] > c0)) { s = ~s; }
+          /*
+          if(c0 != c2) {
+            if(0 <= c2) { BUCKET_B(c2, c1) = k - SA; }
+            k = SA + BUCKET_B(c2 = c0, c1);
+          }
+          assert(k < j);
+          *k-- = s;
+          */
+          k = SA + BUCKET_B(c0, c1);
+          assert(k < j);
+          *k-- = s;
+          BUCKET_B(c0, c1) = k - SA;
+        } else {
+          assert(((s == 0) && (T[s] == c1)) || (s < 0));
+          *j = ~s;
+        }
+      }
+    }
+  }
+
+}
+
+
+void
 induce_typeA(const sauchar_t *T, saidx_t *SA,
              saidx_t *bucket_A, saidx_t *bucket_B,
              saidx_t n, saidx_t m){
@@ -330,7 +377,8 @@ construct_SA(const sauchar_t *T, saidx_t *SA,
   if(0 < m) {
     /* Construct the sorted order of type B suffixes by using
        the sorted order of type B* suffixes. */
-    induce_typeB(T, SA, bucket_A, bucket_B, n, m);
+    //induce_typeB(T, SA, bucket_A, bucket_B, n, m);
+    induce_typeB2(T, SA, bucket_A, bucket_B, n, m);
   }
 
   /* Construct the suffix array by using
