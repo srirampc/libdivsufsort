@@ -29,6 +29,10 @@
 # include <omp.h>
 #endif
 
+#ifdef PHASET
+#include <stdio.h>
+#include <time.h>
+#endif
 
 /*- Private Functions -*/
 saidx_t
@@ -374,16 +378,33 @@ void
 construct_SA(const sauchar_t *T, saidx_t *SA,
              saidx_t *bucket_A, saidx_t *bucket_B,
              saidx_t n, saidx_t m) {
+#ifdef INDUCET
+    clock_t start, finish;
+    double diff;
+    start = clock();
+#endif
+
   if(0 < m) {
     /* Construct the sorted order of type B suffixes by using
        the sorted order of type B* suffixes. */
-    //induce_typeB(T, SA, bucket_A, bucket_B, n, m);
-    induce_typeB2(T, SA, bucket_A, bucket_B, n, m);
+    induce_typeB(T, SA, bucket_A, bucket_B, n, m);
+    //induce_typeB2(T, SA, bucket_A, bucket_B, n, m);
   }
+#ifdef INDUCET
+    finish = clock();
+    diff = (double)(finish - start) / (double)CLOCKS_PER_SEC;
+		printf("PHASE 1  %f ms\n", diff * 1000);
+    start = clock();
+#endif
 
   /* Construct the suffix array by using
      the sorted order of type B suffixes. */
   induce_typeA(T, SA, bucket_A, bucket_B, n, m);
+#ifdef INDUCET
+    finish = clock();
+    diff = (double)(finish - start) / (double)CLOCKS_PER_SEC;
+		printf("PHASE 2  %f ms\n", diff * 10000);
+#endif
 }
 
 /* Constructs the burrows-wheeler transformed string directly
@@ -479,8 +500,25 @@ divsufsort(const sauchar_t *T, saidx_t *SA, saidx_t n) {
 
   /* Suffixsort. */
   if((bucket_A != NULL) && (bucket_B != NULL)) {
+#ifdef PHASET
+    clock_t start, finish;
+    double diff;
+    start = clock();
+#endif
+
     m = sort_typeBstar(T, SA, bucket_A, bucket_B, n);
+#ifdef PHASET
+    finish = clock();
+    diff = (double)(finish - start) / (double)CLOCKS_PER_SEC;
+		printf("PHASE 1  %f ms\n", diff * 1000);
+    start = clock();
+#endif
     construct_SA(T, SA, bucket_A, bucket_B, n, m);
+#ifdef PHASET
+    finish = clock();
+    diff = (double)(finish - start) / (double)CLOCKS_PER_SEC;
+		printf("PHASE 2  %f ms\n", diff * 1000);
+#endif
   } else {
     err = -2;
   }

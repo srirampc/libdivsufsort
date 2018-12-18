@@ -31,6 +31,10 @@
 extern "C" {
 #endif /* __cplusplus */
 
+// timings
+#cmakedefine PHASET
+#cmakedefine SORTT
+
 /** Define to the version of this package. **/
 #cmakedefine PROJECT_VERSION_FULL "${PROJECT_VERSION_FULL}"
 

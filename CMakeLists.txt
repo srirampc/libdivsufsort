@@ -22,6 +22,7 @@ option(BUILD_EXAMPLES "Build examples" ON)
 option(BUILD_DIVSUFSORT64 "Build libdivsufsort64" OFF)
 option(USE_OPENMP "Use OpenMP for parallelization" OFF)
 option(WITH_LFS "Enable Large File Support" ON)
+option (PHASET "TIMINGS FOR EACH PHASE" OFF)
 
 ## Installation directories ##
 set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32 or 64)")
