@@ -236,6 +236,18 @@ induce_typeA(const sauchar_t *T, saidx@W64BIT@_t *SA,
              saidx@W64BIT@_t *bucket_A, saidx@W64BIT@_t *bucket_B,
              saidx@W64BIT@_t n, saidx@W64BIT@_t m);
 
+DIVSUFSORT_API
+saidx@W64BIT@_t
+sort_typeBstar(const sauchar_t *T, saidx@W64BIT@_t *SA,
+               saidx@W64BIT@_t *bucket_A, saidx@W64BIT@_t *bucket_B,
+               saidx@W64BIT@_t n);
+
+DIVSUFSORT_API
+void
+construct_SA(const sauchar_t *T, saidx@W64BIT@_t *SA,
+             saidx@W64BIT@_t *bucket_A, saidx@W64BIT@_t *bucket_B,
+             saidx@W64BIT@_t n, saidx@W64BIT@_t m);
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */
